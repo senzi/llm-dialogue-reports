@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             // 在iframe中显示PDF
-            pdfViewer.src = data.pdf_url;
+            pdfViewer.src = data.preview_url;
             pdfViewer.style.backgroundColor = '#fff';
         })
         .catch(error => {
