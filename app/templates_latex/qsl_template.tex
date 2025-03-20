@@ -1,0 +1,142 @@
+% qsl_template.tex
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{qrcode}
+\usepackage{fontspec}
+
+% 设置A4纸张边距
+\geometry{a4paper, margin=1.5cm}
+
+% 设置字体
+\setmainfont{Arial}
+
+% 定义颜色
+\definecolor{headercolor}{RGB}{50, 50, 150}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+
+% 页眉页脚设置
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+\begin{center}
+    \Large{\textbf{LLM交互确认卡 (AI INTERACTION QSL)}}
+\end{center}
+
+\vspace{0.5cm}
+
+% 顶部信息表格
+\begin{tabularx}{\textwidth}{|X|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{通讯ID}} & \rowcolor{headercolor}\textcolor{white}{\textbf{交互时间}} \\
+    \hline
+    [communication_id] & [interaction_time] \\
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{模型}} & \rowcolor{headercolor}\textcolor{white}{\textbf{API提供方}} \\
+    \hline
+    [model] & [api_provider] \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% 技术参数表格
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{交互类型}} & \rowcolor{headercolor}\textcolor{white}{\textbf{输入/输出令牌}} & \rowcolor{headercolor}\textcolor{white}{\textbf{质量评分}} & \rowcolor{headercolor}\textcolor{white}{\textbf{响应延迟}} \\
+    \hline
+    [interaction_type] & [input_tokens]/[output_tokens] & [quality_score] & [response_latency] \\
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{温度}} & \multicolumn{3}{l|}{\textbf{用户ID (GPG公钥)}} \\
+    \hline
+    [temperature] & \multicolumn{3}{l|}{[user_gpg]} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% 交互摘要
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{交互摘要}} \\
+    \hline
+    [interaction_summary] \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% 用户问题
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{用户问题}} \\
+    \hline
+    \begin{minipage}[t]{\linewidth-20pt}
+        \vspace{5pt}
+        [user_query]
+        \vspace{5pt}
+    \end{minipage} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% LLM响应
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{LLM响应}} \\
+    \hline
+    \begin{minipage}[t]{\linewidth-20pt}
+        \vspace{5pt}
+        [llm_response]
+        \vspace{5pt}
+    \end{minipage} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% 签名部分
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{GPG 签名}} \\
+    \hline
+    \texttt{-----BEGIN PGP SIGNATURE-----\\
+    [签名内容]\\
+    -----END PGP SIGNATURE-----} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% 备注部分
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \rowcolor{headercolor}\textcolor{white}{\textbf{备注}} \\
+    \hline
+    [remarks] \\
+    \hline
+\end{tabularx}
+
+% 添加二维码和卡片生成时间
+\begin{flushright}
+    \begin{tikzpicture}
+        \node[draw=none] at (0,0) {\qrcode{[communication_id]}};
+    \end{tikzpicture}\\
+    卡片生成时间: \today
+\end{flushright}
+
+\end{document}
