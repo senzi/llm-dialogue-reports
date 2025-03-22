@@ -3,269 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM交互确认卡</title>
+    <title>量子思维交互记录</title>
     <style>
-        @page {
-            size: A4;
-            margin: 1.5cm;
-        }
+    @page {
+        size: A4;
+        margin: 1.5cm;
+    }
+    body {
+        font-family: "Microsoft YaHei", "SimSun", "SimHei", sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #222;
+        font-size: 10pt;
+        line-height: 1.4;
+        background-color: #f1f1f1;
+    }
+    .container {
+        max-width: 21cm;
+        margin: 0 auto;
+        padding: 1cm;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+    }
+    .main-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+    .nested-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        table-layout: fixed;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 7px 10px;
+        text-align: left;
+        vertical-align: top;
+    }
+    th {
+        background: linear-gradient(135deg, #333, #222);
+        color: white;
+        font-weight: bold;
+    }
+    .no-border {
+        border: none;
+    }
+    .no-padding {
+        padding: 0;
+    }
+    .long-text {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        min-height: 40px;
+        background-color: #f5f5f5;
+        border-left: 3px solid #444;
+        padding-left: 12px;
+    }
+    .hash {
+        font-family: monospace;
+        word-wrap: break-word;
+        font-size: 9pt;
+        letter-spacing: 1px;
+        background-color: #f0f0f0;
+        padding: 8px 12px;
+        border-radius: 4px;
+        border-left: 3px solid #444;
+        color: #333;
+    }
+    .footer {
+        margin-top: 15px;
+        padding: 10px 15px;
+        background: linear-gradient(to right, #f5f5f5, white);
+        border-top: 1px solid #ddd;
+        color: #555;
+        font-style: italic;
+        text-align: center;
+        border-radius: 0 0 8px 8px;
+        font-size: 9pt;
+        line-height: 1.5;
+    }
+    h1 {
+        text-align: center;
+        color: #222;
+        margin: 0 0 15px 0;
+        font-size: 18pt;
+        letter-spacing: 2px;
+        position: relative;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+        font-weight: 900;
+    }
+    h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 3px;
+        background: linear-gradient(to right, #555, #222);
+        border-radius: 2px;
+    }
+    .tech-label {
+        font-family: monospace;
+        letter-spacing: 0.5px;
+        color: #333;
+    }
+    .header-row td {
+        background-color: #f8f8f8;
+    }
+    .main-section th {
+        position: relative;
+    }
+    .meta-info {
+        margin-bottom: 15px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .meta-card {
+        background: linear-gradient(135deg, #f5f5f5, #efefef);
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .meta-card-label {
+        font-size: 8pt;
+        text-transform: uppercase;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .meta-card-value {
+        font-weight: bold;
+        color: #222;
+    }
+    .card-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .watermark {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 8pt;
+        color: #ddd;
+        transform: rotate(-45deg);
+        transform-origin: bottom right;
+        z-index: -1;
+    }
+    .hash-watermark {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: monospace;
+        font-size: 8pt;
+        color: rgba(100, 100, 100, 0.07);
+        writing-mode: vertical-rl;
+        letter-spacing: 1px;
+        text-orientation: mixed;
+        white-space: nowrap;
+        z-index: -1;
+    }
+    .tech-decoration {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, rgba(150, 150, 150, 0.1), rgba(100, 100, 100, 0.05));
+        border-radius: 0 0 0 120px;
+        z-index: -1;
+    }
+    .tech-decoration::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgba(100, 100, 100, 0.2);
+        border-radius: 50%;
+    }
+    .chip-decoration {
+        position: absolute;
+        top: 1cm;
+        left: 1cm;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(100, 100, 100, 0.3);
+        border-radius: 5px;
+        z-index: -1;
+        overflow: hidden;
+    }
+    .chip-decoration::before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+        background: repeating-linear-gradient(
+            to right,
+            rgba(100, 100, 100, 0.1),
+            rgba(100, 100, 100, 0.1) 2px,
+            transparent 2px,
+            transparent 4px
+        );
+    }
+    .subtitle {
+        text-align: center;
+        font-size: 10pt;
+        color: #666;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .serial-number {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        font-family: monospace;
+        font-size: 8pt;
+        color: #777;
+    }
+    .circuit-lines {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 20px,
+            rgba(100, 100, 100, 0.05) 20px,
+            rgba(100, 100, 100, 0.05) 40px
+        );
+        z-index: -1;
+    }
+    .highlight-row {
+        background-color: #f9f9f9;
+    }
+    .corner-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        border-right: 2px solid rgba(100, 100, 100, 0.2);
+        border-bottom: 2px solid rgba(100, 100, 100, 0.2);
+        border-radius: 0 0 8px 0;
+        z-index: -1;
+    }
+    .grid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            linear-gradient(rgba(200, 200, 200, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(200, 200, 200, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+        z-index: -2;
+    }
+    @media print {
         body {
-            font-family: "Microsoft YaHei", "SimSun", "SimHei", sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #111;
-            font-size: 10pt;
-            line-height: 1.3;
-            background-color: #fafafa;
+            background-color: white;
         }
-        .main-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .nested-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0;
-            table-layout: fixed;
-        }
-        th, td {
-            border: 1px solid #444;
-            padding: 5px 8px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background-color: #222;
-            color: white;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-        th::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 30%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1));
-        }
-        .no-border {
-            border: none;
-        }
-        .no-padding {
+        .container {
+            box-shadow: none;
             padding: 0;
         }
-        .long-text {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            min-height: 40px;
-            background-color: #f7f7f7;
-        }
-        .hash {
-            font-family: monospace;
-            word-wrap: break-word;
-            font-size: 9pt;
-            letter-spacing: 1px;
-            background-color: #f0f0f0;
-            padding: 8px;
-            border-radius: 3px;
-            border-left: 3px solid #333;
-        }
-        .footer {
-            width: 100%;
-            vertical-align: middle;
-            font-style: italic;
-            color: #555;
-            text-align: center;
-            padding: 10px;
-            border-top: 1px dashed #777;
-            margin-top: 4px;
-        }
-        h1 {
-            text-align: center;
-            color: #111;
-            margin: 15px 0;
-            font-size: 16pt;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        h1::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 2px;
-            background-color: #333;
-        }
-        .tech-label {
-            font-family: monospace;
-            letter-spacing: 0.5px;
-        }
-        .header-row td {
-            background-color: #f0f0f0;
-        }
-        .main-section th {
-            position: relative;
-        }
-        .main-section th::before {
-            content: "■";
-            font-size: 8pt;
-            position: absolute;
-            left: 3px;
-            top: 3px;
-            opacity: 0.5;
-        }
+    }
     </style>
 </head>
 <body>
-    <h1>LLM交互记录单</h1>
-    <div class="tech-label" style="text-align: center; margin-bottom: 15px;">LANGUAGE MODEL INTERACTION RECEIPT</div>
-    
-    <table class="main-table">
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 顶部信息表格 -->
-                <table class="nested-table">
-                    <tr>
-                        <th colspan="2">通讯ID</th>
-                        <th colspan="2">交互时间</th>
-                    </tr>
-                    <tr class="header-row">
-                        <td colspan="2">[communication_id]</td>
-                        <td colspan="2">[interaction_time]</td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">模型</th>
-                        <th colspan="2">API提供方</th>
-                    </tr>
-                    <tr class="header-row">
-                        <td colspan="2">[model]</td>
-                        <td colspan="2">[api_provider]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+    <div class="container">
+        <div class="tech-decoration"></div>
+        <div class="chip-decoration"></div>
+        <div class="circuit-lines"></div>
+        <div class="serial-number">序列号: α-7.{{ input_tokens }}</div>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 技术参数表格 -->
-                <table class="nested-table">
-                    <tr>
-                        <th width="25%">交互类型</th>
-                        <th width="25%">输入/输出令牌</th>
-                        <th width="25%">质量评分</th>
-                        <th width="25%">响应延迟</th>
-                    </tr>
-                    <tr>
-                        <td>[interaction_type]</td>
-                        <td>[input_tokens]/[output_tokens]</td>
-                        <td>[quality_score]</td>
-                        <td>[response_latency]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+        <div class="hash-watermark">{{ conversation_hash }}</div>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 温度和用户ID -->
-                <table class="nested-table">
-                    <tr>
-                        <th width="25%">温度</th>
-                        <th width="75%">用户ID</th>
-                    </tr>
-                    <tr>
-                        <td>[temperature]</td>
-                        <td class="tech-label">[user_id]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+        <div class="card-header">
+            <h1>量子思维交互记录</h1>
+            <div class="subtitle">QUANTUM INTELLECT EXCHANGE PROTOCOL</div>
+        </div>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 交互摘要 -->
-                <table class="nested-table main-section">
-                    <tr>
-                        <th>交互摘要</th>
-                    </tr>
-                    <tr>
-                        <td>[interaction_summary]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+        <div class="meta-info">
+            <div class="meta-card">
+                <div class="meta-card-label">神经网络</div>
+                <div class="meta-card-value">{{ model }}</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-card-label">智能矩阵提供者</div>
+                <div class="meta-card-value">{{ api_provider }}</div>
+            </div>
+        </div>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 用户问题 -->
-                <table class="nested-table main-section">
-                    <tr>
-                        <th>用户问题</th>
-                    </tr>
-                    <tr>
-                        <td class="long-text">[user_query]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+        <table class="main-table">
+            <tr>
+                <td class="no-border no-padding">
+                    <table class="nested-table">
+                        <tr>
+                            <th colspan="2">神经链接编码</th>
+                            <th colspan="2">思维同步时刻</th>
+                        </tr>
+                        <tr class="header-row">
+                            <td colspan="2" class="tech-label">{{ communication_id }}</td>
+                            <td colspan="2">{{ interaction_time }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table">
+                        <tr>
+                            <th width="25%">人类思维碎片</th>
+                            <th width="25%">AI思维结晶</th>
+                            <th width="25%">共鸣强度指数</th>
+                            <th width="25%">思维传输延迟</th>
+                        </tr>
+                        <tr>
+                            <td>{{ input_tokens }}</td>
+                            <td>{{ output_tokens }}</td>
+                            <td>{{ quality_score }}/100</td>
+                            <td>{{ response_latency }}ms</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table">
+                        <tr>
+                            <th width="25%">量子熵值</th>
+                            <th width="75%">人类识别码</th>
+                        </tr>
+                        <tr>
+                            <td>{{ temperature }}</td>
+                            <td class="tech-label">{{ user_id }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table main-section">
+                        <tr>
+                            <th>思维交汇概要</th>
+                        </tr>
+                        <tr>
+                            <td>{{ interaction_summary }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table main-section">
+                        <tr>
+                            <th>人类思维输入</th>
+                        </tr>
+                        <tr>
+                            <td class="long-text">{{ user_query }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table main-section">
+                        <tr>
+                            <th>AI意识回应</th>
+                        </tr>
+                        <tr>
+                            <td class="long-text">{{ llm_response }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table main-section">
+                        <tr>
+                            <th>量子验证指纹</th>
+                        </tr>
+                        <tr>
+                            <td class="hash">{{ conversation_hash }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="no-border no-padding" style="padding-top: 10px;">
+                    <table class="nested-table main-section">
+                        <tr>
+                            <th>超维度附注</th>
+                        </tr>
+                        <tr>
+                            <td>{{ remarks }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- LLM响应 -->
-                <table class="nested-table main-section">
-                    <tr>
-                        <th>LLM响应</th>
-                    </tr>
-                    <tr>
-                        <td class="long-text">[llm_response]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+        <div class="footer">
+            <strong>声明</strong>：本交互确认卡是人类与人工智能深度对话的唯一凭证，兼具技术档案与数字艺术价值。<br>
+            此卡遵循《全球AI交互频谱条例》规范，编号记入星际数据库。仅限学术研究与前沿智能交流使用。<br>
+            <span style="font-size: 8pt;">此神经交互记录已由量子哈希算法验证并永久保存。传输频率：GPT-ω • 时空坐标：{{ generation_date }}</span>
+        </div>
         
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 哈希值 -->
-                <table class="nested-table main-section">
-                    <tr>
-                        <th>哈希值</th>
-                    </tr>
-                    <tr>
-                        <td class="hash">[conversation_hash]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        
-        <tr>
-            <td class="no-border no-padding">
-                <!-- 备注 -->
-                <table class="nested-table main-section">
-                    <tr>
-                        <th>备注</th>
-                    </tr>
-                    <tr>
-                        <td>[remarks]</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        
-        <tr>
-            <td class="footer">
-                <strong>声明</strong>：本交互确认卡用于记录LLM交互信息，仅作学术和技术交流用途。<br>
-                卡片生成时间: [generation_date]
-            </td>
-        </tr>
-    </table>
+        <div class="watermark">VERIFIED NEURAL EXCHANGE • COSMIC INTELLIGENCE NETWORK</div>
+    </div>
 </body>
 </html>
